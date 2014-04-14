@@ -1,0 +1,71 @@
+(dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
+              (when (fboundp mode) (funcall mode -1)))
+
+(setq-default inhibit-startup-screen t)
+(setq-default indent-tabs-mode nil)
+(setq-default column-number-mode t)
+
+(global-set-key (kbd "S-<up>") 'windmove-up)
+(global-set-key (kbd "S-<down>") 'windmove-down)
+(global-set-key (kbd "S-<left>") 'windmove-left)
+(global-set-key (kbd "S-<right>") 'windmove-right)
+
+;;function to implement a smarter TAB (EmacsWiki)
+(defun smart-tab ()
+  "This smart tab is minibuffer compliant: it acts as usual in
+    the minibuffer. Else, if mark is active, indents region. Else if
+    point is at the end of a symbol, expands it. Else indents the
+    current line."
+  (interactive)
+  (if (minibufferp)
+      (unless (minibuffer-complete)
+        (hippie-expand nil))
+    (if mark-active
+        (indent-region (region-beginning)
+                       (region-end))
+      (if (looking-at "\\_>")
+         (hippie-expand nil)
+        (indent-for-tab-command)))))
+
+(global-set-key (kbd "TAB") 'smart-tab)
+(global-set-key "\C-ck" 'comment-region)
+
+(global-set-key (kbd "C-c C-+") 'text-scale-increase)
+(global-set-key (kbd "C-c C--") 'text-scale-decrease)
+
+;; Always ask for y/n keypress instead of typing out 'yes' or 'no'
+(defalias 'yes-or-no-p 'y-or-n-p)
+(defalias 'query-replace-regexp 'qrr)
+
+(require 'package)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
+
+;;(add-hook 'clojure-mode-hook 'paredit-mode)
+
+; http://ianeslick.com/2013/05/17/clojure-debugging-13-emacs-nrepl-and-ritz/
+(setq nrepl-hide-special-buffers t)
+(setq nrepl-popup-stacktraces-in-repl t)
+(setq nrepl-history-file "~/.emacs.d/nrepl-history")
+
+;; Repl mode hook
+(add-hook 'nrepl-mode-hook 'subword-mode)
+ 
+;; Auto completion for NREPL
+(require 'ac-nrepl)
+(eval-after-load "auto-complete"
+'(add-to-list 'ac-modes 'nrepl-mode))
+(add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
+
+(load-theme 'zenburn t)
+(set-default-font "-unknown-Inconsolata-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+(display-time-mode t)
+
+
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+
+(desktop-save-mode t)

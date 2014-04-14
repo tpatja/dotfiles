@@ -1,0 +1,36 @@
+[user]
+	name = Teemu Patja
+	email = tp@iki.fi
+
+[core]
+	editor = st.sh -w
+	autocrlf = false
+
+[diff]
+	tool = p4merge
+
+#[difftool "p4merge"]
+#	cmd = "p4merge.exe -dl \"$PWD/$LOCAL\" \"$PWD/$$REMOTE\""
+
+[merge]
+	tool = p4merge
+
+[mergetool "p4merge"]
+	cmd = "p4merge.exe \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\""
+	trustExitCode = true
+	keepBackup = false
+
+[push]
+	default = simple
+
+[log]
+	date = default
+
+[alias]
+	# msys git + cygwin mintty = no pager, hence the hacks
+	undo-commit = reset --soft HEAD^
+	pru = !git pull --rebase && git submodule update
+	spru = !git stash && git pru && git stash pop
+	spush = !git stash && git pru && git push && git stash pop
+	l  = !git log|less 
+	shw = "!f() { git show $1|less; }; f"
