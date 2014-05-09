@@ -1,23 +1,26 @@
 
-
-if [ -f /etc/bash_completion ]; then
-  . /etc/bash_completion
-fi
+[[ -f /etc/bash_completion ]] && . /etc/bash_completion
 
 export PS1='\[\e[32m\]\u@\h:\[\e[33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$ '
-
-export LESS="-X --QUIT-AT-EOF --quit-if-one-screen --quit-on-intr --line-numbers --raw-control-chars"
+export LESS="-X --QUIT-AT-EOF --quit-if-one-screen --quit-on-intr --line-numbers --raw-control-chars --LONG-PROMPT"
 
 
 if [ "$(uname | grep -i cygwin)" != "" ] ; then
   CYGWIN=1
-  echo "cygwin detected"
+fi
+
+
+if [ "$CYGWIN" == "1" ]; then  
   export ANT_HOME=/cygdrive/c/tools/apache-ant-1.9.0
   export PATH=$ANT_HOME/bin:$PATH=/cygdrive/c/tools/apache
   complete -C complete-ant-cmd.pl ant build.sh
   export JAVA_HOME=/cygdrive/c/Program\ Files/Java/jdk1.7.0_17
   export PATH=$JAVA_HOME/bin:$PATH
   export PATH=/cygdrive/c/tools/apache-maven-3.0.5/bin:$PATH
+  export EDITOR=st.sh
+else
+  export PATH=~/bin:$PATH
+  export EDITOR=emacs
 fi
 
 
@@ -45,6 +48,9 @@ run_on_prompt_command()
 
 PROMPT_COMMAND="run_on_prompt_command"
 alias phgrep='cat ~/.persistent_history|grep --color'
+
+shopt -s nocaseglob
+
 alias ll='ls -l'
 alias ls='ls --color=tty'
 alias showpath='echo $PATH|sed "s/\:/\\n/g"'
