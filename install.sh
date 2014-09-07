@@ -1,6 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
 function usage {
+  echo "installs dotfiles by symlinking"
   echo "USAGE: $1 [-f]"
   echo "  -f disables backup of existing dotfile"
   exit 0
@@ -13,7 +14,7 @@ function linkfile {
     if [ "-f" == "$2" ]; then
       rm -f $dst
     else
-      echo mv $dst $dst.bak
+      mv $dst $dst.bak
     fi
   fi
   ln -s $src $dst 
