@@ -10,7 +10,7 @@ fi
 
 if [ "$CYGWIN" == "1" ]; then  
   export ANT_HOME=/cygdrive/c/tools/apache-ant-1.9.0
-  export PATH=$ANT_HOME/bin:$PATH=/cygdrive/c/tools/apache
+  export PATH=$ANT_HOME/bin:$PATH/cygdrive/c/tools/apache
   complete -C complete-ant-cmd.pl ant build.sh
   export JAVA_HOME=/cygdrive/c/Program\ Files/Java/jdk1.7.0_17
   export PATH=$JAVA_HOME/bin:$PATH
