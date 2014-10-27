@@ -8,16 +8,16 @@ function usage {
 }
 
 function linkfile {
-  src=$(readlink -m $1)
+  src=$(pwd)/$1
   dst=~/.$(echo $1|sed s/^dot//)
-  if [ -e $dst ]; then
+  if [[ -e $dst ]]; then
     if [ "-f" == "$2" ]; then
       rm -f $dst
     else
       mv $dst $dst.bak
     fi
   fi
-  ln -s $src $dst 
+  ln -sf $src $dst 
 }
 
 

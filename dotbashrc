@@ -56,7 +56,9 @@ set_window_title()
 run_on_prompt_command()
 {
     log_bash_persistent_history
-    set_window_title $(echo $PWD | sed s:^$HOME:~:)
+    if [[ $(uname) != "Darwin" ]]; then
+        set_window_title $(echo $PWD | sed s:^$HOME:~:)
+    fi
 }
 
 PROMPT_COMMAND="run_on_prompt_command"
@@ -66,6 +68,11 @@ alias phgrep='cat ~/.persistent_history|grep --color'
 shopt -s nocaseglob
 
 alias ll='ls -l'
-alias ls='ls --color=tty'
+if [[ $(uname) == "Darwin" ]]; then
+  alias ls='ls -G'
+else
+  alias ls='ls --color=tty'
+fi
+
 alias showpath='echo $PATH|sed "s/\:/\\n/g"'
 
