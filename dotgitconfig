@@ -3,20 +3,16 @@
 	email = tp@iki.fi
 
 [core]
-	editor = st.sh -w
 	autocrlf = false
 
 [diff]
 	tool = p4merge
 
-#[difftool "p4merge"]
-#	cmd = "p4merge.exe -dl \"$PWD/$LOCAL\" \"$PWD/$$REMOTE\""
-
 [merge]
 	tool = p4merge
 
 [mergetool "p4merge"]
-	cmd = "p4merge.exe \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\""
+	cmd = "p4merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\""
 	trustExitCode = true
 	keepBackup = false
 

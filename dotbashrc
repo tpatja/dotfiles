@@ -1,6 +1,10 @@
 
 [[ -f /etc/bash_completion ]] && . /etc/bash_completion
 
+if [[ $(uname) == "Darwin" ]]; then
+  [[ -f $(brew --prefix)/etc/bash_completion ]] && . $(brew --prefix)/etc/bash_completion
+fi
+
 export PS1='\[\e[32m\]\u@\h:\[\e[33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$ '
 export LESS="-X --QUIT-AT-EOF --quit-if-one-screen --quit-on-intr --line-numbers --raw-control-chars --LONG-PROMPT"
 
@@ -18,9 +22,8 @@ if [ "$CYGWIN" == "1" ]; then
   export EDITOR=st.sh
 else
   export EDITOR=emacs
+  export PATH=~/bin:$PATH
 fi
-
-export PATH=~/bin:$PATH
 
 
 # from Eli Bendersky's blog
