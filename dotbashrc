@@ -22,7 +22,7 @@ if [ "$CYGWIN" == "1" ]; then
   export EDITOR=st.sh
 else
   export EDITOR=emacs
-  export PATH=~/bin:$PATH
+  export PATH=~/bin:/usr/local/bin:$PATH
 fi
 
 
@@ -73,6 +73,7 @@ shopt -s nocaseglob
 alias ll='ls -l'
 if [[ $(uname) == "Darwin" ]]; then
   alias ls='ls -G'
+  alias myip=$'ifconfig |grep \"inet \"|grep -v \"127.0.0.1\"|awk \'{print $2}\''
 else
   alias ls='ls --color=tty'
 fi
