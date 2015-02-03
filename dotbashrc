@@ -1,8 +1,10 @@
-
+# -*- mode: sh -*-
 [[ -f /etc/bash_completion ]] && . /etc/bash_completion
 
 if [[ $(uname) == "Darwin" ]]; then
   [[ -f $(brew --prefix)/etc/bash_completion ]] && . $(brew --prefix)/etc/bash_completion
+  # homebrew seems to require this for pip packages to work
+  export PYTHONPATH=/usr/local/lib/python2.7/site-packages
 fi
 
 export PS1='\[\e[32m\]\u@\h:\[\e[33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$ '
