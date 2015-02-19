@@ -6,7 +6,7 @@
 (global-set-key (kbd "C-c C--") 'text-scale-decrease)
 
 (global-set-key (kbd "<f8>")
-                (lambda () (interactive)(call-process "date" nil t)))
+                (lambda () (interactive)(call-process "date" nil t nil "+\%d.\%m.\%Y \%H:\%M" )))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
