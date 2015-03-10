@@ -62,6 +62,8 @@
     magit
     
     zenburn-theme
+
+    bash-completion
     ))
 
 ;; https://github.com/purcell/exec-path-from-shell
@@ -121,6 +123,11 @@
       (if (looking-at "\\_>")
          (hippie-expand nil)
         (indent-for-tab-command)))))
+
+
+(require 'bash-completion)
+(bash-completion-setup)
+
 
 ;; OS clipboard
 (setq
@@ -211,6 +218,10 @@
     (setq ns-option-modifier nil))
 
 (setq vc-follow-symlinks t)
+
+(require 'server)
+(unless (server-running-p)
+  (server-start))
 
 (load-theme 'zenburn t)
 

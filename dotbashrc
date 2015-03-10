@@ -23,7 +23,7 @@ if [ "$CYGWIN" == "1" ]; then
   export PATH=/cygdrive/c/tools/apache-maven-3.0.5/bin:$PATH
   export EDITOR=st.sh
 else
-  export EDITOR=emacs
+  export EDITOR=emacsclient
   export PATH=~/bin:/usr/local/bin:$PATH
 fi
 
