@@ -30,3 +30,5 @@
 	spush = !git stash && git pru && git push && git stash pop
 	l  = !git log|less 
 	shw = "!f() { git show $1|less; }; f"
+[gitreview]
+	username = tpatja
