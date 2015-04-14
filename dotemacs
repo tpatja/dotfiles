@@ -60,10 +60,9 @@
 
     ;; git integration
     magit
-    
     zenburn-theme
-
     bash-completion
+    expand-region
     ))
 
 ;; https://github.com/purcell/exec-path-from-shell
@@ -76,7 +75,6 @@
 
 ;; downloaded .el files
 (add-to-list 'load-path "~/.emacs.d/vendor")
-
 
 ;; customizations
 (add-to-list 'load-path "~/.emacs.d/customizations")
@@ -226,6 +224,9 @@
 (require 'server)
 (unless (server-running-p)
   (server-start))
+
+(require 'expand-region)
+(global-set-key (kbd "C-0") 'er/expand-region)
 
 (load-theme 'zenburn t)
 
