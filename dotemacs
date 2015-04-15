@@ -63,6 +63,7 @@
     zenburn-theme
     bash-completion
     expand-region
+    multiple-cursors
     ))
 
 ;; https://github.com/purcell/exec-path-from-shell
@@ -227,6 +228,14 @@
 
 (require 'expand-region)
 (global-set-key (kbd "C-0") 'er/expand-region)
+
+(require 'multiple-cursors)
+(global-set-key (kbd "C-^") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-'") 'mc/unmark-next-like-this)
+
+
+(add-to-list 'auto-mode-alist '("\\.qml$" . qml-mode))
+
 
 (load-theme 'zenburn t)
 
