@@ -23,7 +23,8 @@
                ("(\\(background?\\)"
                 (1 font-lock-keyword-face))))
             (define-clojure-indent (fact 1))
-            (define-clojure-indent (facts 1))))
+            (define-clojure-indent (facts 1))
+            (clj-refactor-mode 1)))
 
 ;;;;
 ;; Cider
@@ -80,3 +81,6 @@
      (define-key clojure-mode-map (kbd "C-M-r") 'cider-refresh)
      (define-key clojure-mode-map (kbd "C-c u") 'cider-user-ns)
      (define-key cider-mode-map (kbd "C-c u") 'cider-user-ns)))
+
+;; clj-refactor
+(cljr-add-keybindings-with-prefix "C-c C-m")

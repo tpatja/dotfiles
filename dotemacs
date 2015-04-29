@@ -64,7 +64,7 @@
     bash-completion
     expand-region
     multiple-cursors
-    ))
+    clj-refactor))
 
 ;; https://github.com/purcell/exec-path-from-shell
 (if (eq system-type 'darwin)
@@ -80,10 +80,9 @@
 ;; customizations
 (add-to-list 'load-path "~/.emacs.d/customizations")
 
-;; Langauage-specific
+;; Language-specific
 (load "setup-clojure.el")
 (load "setup-js.el")
-
 
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
