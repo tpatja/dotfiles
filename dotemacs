@@ -83,6 +83,8 @@
 ;; Language-specific
 (load "setup-clojure.el")
 (load "setup-js.el")
+(load "~/.emacs.d/robot-mode.el")
+(load "~/.emacs.d/qml-mode.el")
 
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
