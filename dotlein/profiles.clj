@@ -1,13 +1,15 @@
 {:user
- {:plugins [[cider/cider-nrepl "0.8.2"]
-            [refactor-nrepl "1.0.3"]
-            [com.jakemccrary/lein-test-refresh "0.9.0"]]
-  :dependencies [[spyscope "0.1.4"]
-                  [org.clojure/tools.namespace "0.2.4"]
-                  [leiningen #=(leiningen.core.main/leiningen-version)]
-                  [io.aviso/pretty "0.1.8"]
-                  [im.chit/vinyasa "0.3.4"]
-                  [org.clojars.gjahad/debug-repl "0.3.3"]]
+ {
+  :plugins [[cider/cider-nrepl "0.9.1"]
+            [refactor-nrepl "1.1.0"]
+            [com.jakemccrary/lein-test-refresh "0.11.0"]]
+  :dependencies [[spyscope "0.1.5"]
+                 [org.clojure/tools.namespace "0.2.11"]
+                 [leiningen #=(leiningen.core.main/leiningen-version)]
+                 [io.aviso/pretty "0.1.20"]
+                 [alembic "0.3.2"]
+                 [im.chit/vinyasa "0.4.2"]
+                 [org.clojars.gjahad/debug-repl "0.3.3"]]
   :injections [(require 'spyscope.core)
                (require '[vinyasa.inject :as inject])
                (require 'io.aviso.repl)
@@ -17,11 +19,7 @@
                 [vinyasa.lein :exclude [*project*]]  
                 
                 ;; imports all functions in vinyasa.pull
-                [vinyasa.pull :all]
-                
-                ;; same as [cemerick.pomegranate 
-                ;;           :refer [add-classpath get-classpath resources]]
-                [cemerick.pomegranate add-classpath get-classpath resources] 
+                [alembic.still [distill pull]]
                 
                 ;; inject into clojure.core 
                 clojure.core
