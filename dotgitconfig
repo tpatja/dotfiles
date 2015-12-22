@@ -3,7 +3,7 @@
 	email = tp@iki.fi
 
 [core]
-	autocrlf = false
+	autocrlf = input
 
 [diff]
 	tool = p4merge
