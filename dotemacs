@@ -67,7 +67,9 @@
     clj-refactor
     package-utils
     less-css-mode
-    editorconfig))
+    editorconfig
+    guess-style
+    python-mode))
 
 ;; https://github.com/purcell/exec-path-from-shell
 (if (eq system-type 'darwin)
@@ -85,29 +87,24 @@
 
 ;; Language-specific
 (load "setup-clojure.el")
+(load "setup-python.el")
 (load "setup-js.el")
+
 (load "~/.emacs.d/robot-mode.el")
 (load "~/.emacs.d/qml-mode.el")
 
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
 
-(add-hook 'python-mode-hook
-          (lambda ()
-            (setq indent-tabs-mode nil)
-            (setq tab-width 2)
-            (setq python-indent 2)
-            (setq python-indent-offset 2)))
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
+
 
 ;; UI
-
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
               (when (fboundp mode) (funcall mode -1)))
 
 (setq-default inhibit-startup-screen t)
-(setq-default indent-tabs-mode nil)
 (setq-default column-number-mode t)
 (setq bell-volume 0)
 
@@ -259,7 +256,7 @@
 
 (defun kill-dired-buffers ()
   (interactive)
-  (mapc (lambda (buffer) 
-          (when (eq 'dired-mode (buffer-local-value 'major-mode buffer)) 
-            (kill-buffer buffer))) 
+  (mapc (lambda (buffer)
+          (when (eq 'dired-mode (buffer-local-value 'major-mode buffer))
+            (kill-buffer buffer)))
         (buffer-list)))
