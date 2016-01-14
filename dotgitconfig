@@ -34,3 +34,9 @@
         st = status
 [gitreview]
 	username = tpatja
+[filter "lfs"]
+	smudge = git-lfs-cache.sh smudge %f
+	required = true
+	clean = git-lfs clean %f
+[broadsoft]
+	gitcache = auto
