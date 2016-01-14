@@ -26,41 +26,15 @@
   (package-refresh-contents))
 
 (defvar my-packages
-  '(;; makes handling lisp expressions much, much easier
-    ;; Cheatsheet: http://www.emacswiki.org/emacs/PareditCheatsheet
-    paredit
-
-    ;; key bindings and code colorization for Clojure
-    ;; https://github.com/clojure-emacs/clojure-mode
+  '(paredit
     clojure-mode
-
-    ;; extra syntax highlighting for clojure
     clojure-mode-extra-font-locking
-
-    ;; integration with a Clojure REPL
-    ;; https://github.com/clojure-emacs/cider
     cider
-
-    ;; allow ido usage in as many contexts as possible. see
-    ;; customizations/better-defaults.el line 47 for a description
-    ;; of ido
     ido-ubiquitous
-
-    ;; Enhances M-x to allow easier execution of commands. Provides
-    ;; a filterable list of possible commands in the minibuffer
-    ;; http://www.emacswiki.org/emacs/Smex
     smex
-
-    ;; project navigation
     projectile
-
-    ;; colorful parenthesis matching
     rainbow-delimiters
-
-    ;; edit html tags like sexps
     tagedit
-
-    ;; git integration
     magit
     zenburn-theme
     bash-completion
@@ -72,7 +46,8 @@
     editorconfig
     guess-style
     python-mode
-    restclient))
+    restclient
+    yesql-ghosts))
 
 ;; https://github.com/purcell/exec-path-from-shell
 (if (eq system-type 'darwin)
@@ -142,18 +117,8 @@
 (setq
       x-select-enable-clipboard t
       x-select-enable-primary t
-
-      ;; Save clipboard strings into kill ring before replacing them.
-      ;; When one selects something in another program to paste it into Emacs,
-      ;; but kills something in Emacs before actually pasting it,
-      ;; this selection is gone unless this variable is non-nil
       save-interprogram-paste-before-kill t
-
-      ;; Shows all options when running apropos. For more info,
-      ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Apropos.html
       apropos-do-all t
-
-      ;; Mouse yank commands yank at point instead of at click.
       mouse-yank-at-point t)
 
 (blink-cursor-mode 0)
