@@ -20,6 +20,11 @@ if [ "$CYGWIN" == "1" ]; then
   export EDITOR=st.sh
 else
   export EDITOR=emacsclient
+  export ANT_HOME=/usr/local/opt/ant
+  export MAVEN_HOME=/usr/local/opt/maven
+  export GRADLE_HOME=/usr/local/opt/gradle
+  export ANDROID_HOME=/usr/local/opt/android-sdk
+  export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
   export PATH=~/bin:/usr/local/bin:$PATH
 fi
 
