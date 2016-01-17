@@ -26,6 +26,10 @@
             (define-clojure-indent (facts 1))
             (clj-refactor-mode 1)))
 
+(add-hook 'clojure-mode-hook
+          (lambda () (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
+
+
 ;;;;
 ;; Cider
 ;;;;
@@ -52,7 +56,6 @@
 ;; Use clojure mode for other extensions
 (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
 (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
-(add-to-list 'auto-mode-alist '("\\.cljs.*$" . clojure-mode))
 (add-to-list 'auto-mode-alist '("lein-env" . enh-ruby-mode))
 
 
