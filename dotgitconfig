@@ -32,11 +32,14 @@
 	shw = "!f() { git show $1|less; }; f"
         co = checkout
         st = status
+
 [gitreview]
 	username = tpatja
+
 [filter "lfs"]
-	smudge = git-lfs-cache.sh smudge %f
 	required = true
 	clean = git-lfs clean %f
+	smudge = git-lfs-cache smudge %f
+
 [broadsoft]
 	gitcache = auto
