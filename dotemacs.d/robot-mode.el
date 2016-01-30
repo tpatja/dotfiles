@@ -8,7 +8,7 @@
 ;;    (add-to-list 'auto-mode-alist '("\\.txt\\'" . robot-mode))
 ;;
 ;; Type "M-x load-file" and give the path to the .emacs file (e.g. ~/.emacs)
-;; to reload the file. Now when you open a .txt file emacs automatically sets 
+;; to reload the file. Now when you open a .txt file emacs automatically sets
 ;; the robot-mode on for that buffer. This will also be done automatically when
 ;; you start emacs.
 ;;
@@ -45,14 +45,16 @@
 
 (defun robot-indent()
   "Returns the string used in indation.
-Set indent-tabs-mode to non-nil to use tabs in indentation. If indent-tabs-mode is 
+Set indent-tabs-mode to non-nil to use tabs in indentation. If indent-tabs-mode is
 set to nil c-basic-offset defines how many spaces are used for indentation. If c-basic-offset is
 not set 4 spaces are used.
  "
   (if indent-tabs-mode
       "\t"
-    (make-string (if (boundp 'c-basic-offset) 
-                     c-basic-offset 4) 
+    (let (offset ))
+    (make-string (if (and (boundp 'c-basic-offset)
+                          (typep c-basic-offset 'integer))
+                     c-basic-offset 4)
                  ?\ )))
 
 
@@ -63,16 +65,16 @@ not set 4 spaces are used.
       (replace-regexp-in-string "\\(^\s+\\)\\|\\(\s+$\\)\\|\n$" "" str))
     (defun cut-kw (str)
       (replace-regexp-in-string "  .*$" "" str))
-    (defun cut-bdd (str) 
+    (defun cut-bdd (str)
       (replace-regexp-in-string "^\\(given\\)\\|\\(then\\)\\|\\(when\\)\\s*" "" str))
     (cut-kw (cut-bdd (trim str))))
   (let* ((kw-end (save-excursion (re-search-forward "$\\|\\(  \\)")))
 	 (kw-start (save-excursion (re-search-backward "^\\|\\(  \\)")))
 	 )
-    (save-excursion 
+    (save-excursion
       (let* ((variable-end (re-search-forward "[^}]*}" kw-end t))
 	     (variable-start (re-search-backward "\\(\\$\\|@\\){[^{]*" kw-start t)))
-	(if (and variable-end variable-start) 
+	(if (and variable-end variable-start)
 	    (buffer-substring variable-start variable-end)
 	  (extract-kw (buffer-substring kw-start kw-end)))))))
 
@@ -105,7 +107,7 @@ This function is bound to \\[robot-mode-complete].
 "
   (interactive (list (robot-mode-kw-at-point)))
   (let ((kw-regexp (robot-mode-make-kw-regexp kw-prefix)))
-    (defun normalize-candidate-kw(kw) 
+    (defun normalize-candidate-kw(kw)
       (replace-regexp-in-string "_" " " kw))
     (let ((possible-completions ()))
       (let ((enable-recursive-minibuffers t)
@@ -117,12 +119,12 @@ This function is bound to \\[robot-mode-complete].
 	  (goto-char (point-min))
 	  (while (re-search-forward kw-full nil t)
 	    (if (or (match-beginning 2) (match-beginning 4))
-		(let ((got (buffer-substring 
-			    (or (match-beginning 4) (match-beginning 2)) 
+		(let ((got (buffer-substring
+			    (or (match-beginning 4) (match-beginning 2))
 			    (or (match-end 4) (match-end 2)))))
 		  (add-to-list 'possible-completions (normalize-candidate-kw got)))))))
       (cond ((not possible-completions) (message "No completions found!"))
-	    ((= (length possible-completions) 1) 
+	    ((= (length possible-completions) 1)
 	     (insert (substring (car possible-completions) (length kw-prefix))))
 	    (t (with-output-to-temp-buffer "*Robot KWs*"
                  (display-completion-list possible-completions kw-prefix)))))))
@@ -149,7 +151,7 @@ This function is bound to \\[robot-mode-newline].
 "
   (interactive)
 
-  (defun inside-kw-definition() 
+  (defun inside-kw-definition()
     (save-excursion
       (beginning-of-line)
       (re-search-forward "[^ \t]" (line-end-position) t)))
@@ -185,7 +187,7 @@ This function is bound to \\[robot-mode-indent].
   (interactive)
   (save-excursion
     (beginning-of-line)
-    (let ((line (delete-and-extract-region (line-beginning-position) (line-end-position)))) 
+    (let ((line (delete-and-extract-region (line-beginning-position) (line-end-position))))
       (if (string-match "^[ \t]+" line)
           (insert (replace-regexp-in-string "^[ \t]+" "" line))
         (insert (concat (robot-indent) line))))))
@@ -196,15 +198,15 @@ This function is bound to \\[robot-mode-indent].
 
 This mode rebinds the following keys to new function:
 \\{robot-mode-map}
-In the table above <remap> <function> means that the function is bound to whatever 
+In the table above <remap> <function> means that the function is bound to whatever
 key <function> was bound previously. To see the actual key binding press enter on
-top of the bound function. 
+top of the bound function.
 
-You can use \\[beginning-of-defun] to move to the beginning of the kw 
-the cursor point is at and \\[end-of-defun] to move to the end of the kw. 
+You can use \\[beginning-of-defun] to move to the beginning of the kw
+the cursor point is at and \\[end-of-defun] to move to the end of the kw.
 To select (i.e. put a region around) the whole kw definition press \\[mark-defun].
- 
-Set indent-tabs-mode to non-nil to use tabs for indantation. If indent-tabs-mode is nil, 
+
+Set indent-tabs-mode to non-nil to use tabs for indantation. If indent-tabs-mode is nil,
 c-basic-offset defines the amount of spaces that are inserted when indenting.
 "
   (require 'etags)
@@ -215,7 +217,7 @@ c-basic-offset defines the amount of spaces that are inserted when indenting.
 
   (set (make-local-variable 'beginning-of-defun-function) (lambda()
 							    (re-search-backward "^[^ \t\n]")))
-  (set (make-local-variable 'end-of-defun-function) (lambda() 
+  (set (make-local-variable 'end-of-defun-function) (lambda()
 						      (end-of-line)
 						      (if (not (re-search-forward "^[^ \t\n]" nil t))
 							  (goto-char (point-max))
