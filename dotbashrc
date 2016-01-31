@@ -4,13 +4,13 @@ for f in /etc/bash_completion /usr/local/etc/bash_completion; do
 done
 
 export PS1='\[\e[32m\]\u@\h:\[\e[33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$ '
-export LESS="-X --QUIT-AT-EOF --quit-if-one-screen --quit-on-intr --line-numbers --raw-control-chars --LONG-PROMPT"
+export LESS="--quit-on-intr --LINE-NUMBERS --raw-control-chars --LONG-PROMPT"
 
 if [ "$(uname | grep -i cygwin)" != "" ] ; then
   CYGWIN=1
 fi
 
-if [ "$CYGWIN" == "1" ]; then  
+if [ "$CYGWIN" == "1" ]; then
   export ANT_HOME=/cygdrive/c/tools/apache-ant-1.9.0
   export PATH=$ANT_HOME/bin:$PATH/cygdrive/c/tools/apache
   complete -C complete-ant-cmd.pl ant build.sh
@@ -83,4 +83,3 @@ else
 fi
 
 alias showpath='echo $PATH|sed "s/\:/\\n/g"'
-
