@@ -29,11 +29,10 @@ else
 fi
 
 
-# from Eli Bendersky's blog
 log_bash_persistent_history()
 {
   [[
-    $(history 1) =~ ^\ *[0-9]+\ +([^\ ]+\ [^\ ]+)\ +(.*)$
+    $(history 1) =~ ^\ *[0-9]+\ +([0-9.]+\ [0-9:]+)\ +(.*)$
   ]]
   local date_part="${BASH_REMATCH[1]}"
   local command_part="${BASH_REMATCH[2]}"
@@ -67,6 +66,7 @@ run_on_prompt_command()
     fi
 }
 
+export HISTTIMEFORMAT="%d.%m.%Y %T  "
 PROMPT_COMMAND="run_on_prompt_command;$PROMPT_COMMAND"
 PROMPT_DIRTRIM=3
 alias phgrep='cat ~/.persistent_history|grep --color'
