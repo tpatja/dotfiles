@@ -4,7 +4,7 @@ for f in /etc/bash_completion /usr/local/etc/bash_completion; do
 done
 
 export PS1='\[\e[32m\]\u@\h:\[\e[33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$ '
-export LESS="--quit-on-intr --LINE-NUMBERS --raw-control-chars --LONG-PROMPT"
+export LESS="--quit-on-intr --raw-control-chars --LONG-PROMPT"
 
 if [ "$(uname | grep -i cygwin)" != "" ] ; then
   CYGWIN=1
