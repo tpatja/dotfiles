@@ -47,7 +47,8 @@
     restclient
     yaml-mode
     yasnippet
-    yesql-ghosts))
+    yesql-ghosts
+    dockerfile-mode))
 
 ;; https://github.com/purcell/exec-path-from-shell
 (if (eq system-type 'darwin)
