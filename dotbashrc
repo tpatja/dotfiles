@@ -76,6 +76,18 @@ if [[ $(uname) == "Darwin" ]]; then
   alias myip=$'ifconfig |grep \"inet \"|grep -v \"127.0.0.1\"|awk \'{print $2}\''
   function anybar { echo -n $1 | nc -4u -w0 localhost ${2:-1738}; }
   export JAVA_HOME=$(/usr/libexec/java_home)
+
+
+  [ -f ~/.gpg-agent-info ] && source ~/.gpg-agent-info
+  if [ -S "${GPG_AGENT_INFO%%:*}" ]; then
+    export GPG_AGENT_INFO
+  else
+    if [[ -z $(ps x|grep gpg-agent|grep daemon) ]] \
+       && [[ -x $(which gpg-agent) ]]; then
+      eval $( gpg-agent --daemon --write-env-file ~/.gpg-agent-info )
+    fi
+  fi
+
 else
   alias ls='ls --color=tty'
 fi
