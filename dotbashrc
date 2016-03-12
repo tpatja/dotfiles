@@ -47,9 +47,8 @@ set_window_title()
 {
   case $TERM in
     *xterm*)
-      echo -ne "\e]0;$*\a"
-      ;;
-    *rxvt*)
+      echo -ne "\033]1;\007"
+      echo -ne "\033]2;\007"
       echo -ne "\033]0;$*\007"
       ;;
     *)
@@ -61,9 +60,7 @@ set_window_title()
 run_on_prompt_command()
 {
     log_bash_persistent_history
-    if [[ $(uname) != "Darwin" ]]; then
-        set_window_title $(echo $PWD | sed s:^$HOME:~:)
-    fi
+    set_window_title $(echo $PWD | sed s:^$HOME:~:)
 }
 
 export HISTTIMEFORMAT="%d.%m.%Y %T  "
