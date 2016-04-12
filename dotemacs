@@ -48,7 +48,8 @@
     yaml-mode
     yasnippet
     yesql-ghosts
-    dockerfile-mode))
+    dockerfile-mode
+    jsx-mode))
 
 ;; https://github.com/purcell/exec-path-from-shell
 (if (eq system-type 'darwin)
