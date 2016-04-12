@@ -1,6 +1,6 @@
 ;; javascript / html
 (add-to-list 'auto-mode-alist '("\\.js$" . js-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx$" . jsx-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
 (add-hook 'js-mode-hook 'subword-mode)
 (add-hook 'html-mode-hook 'subword-mode)
 (setq js-indent-level 2)
@@ -21,3 +21,10 @@
             (setq coffee-cleanup-whitespace nil)))
 (custom-set-variables
  '(coffee-tab-width 2))
+
+;; http://emacs.stackexchange.com/a/20055
+(add-hook 'web-mode-hook
+      (lambda ()
+        (if (equal web-mode-content-type "javascript")
+            (web-mode-set-content-type "jsx")
+          (message "now set to: %s" web-mode-content-type))))
