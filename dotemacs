@@ -49,6 +49,7 @@
     yasnippet
     yesql-ghosts
     dockerfile-mode
+    js2-mode
     web-mode))
 
 ;; https://github.com/purcell/exec-path-from-shell
