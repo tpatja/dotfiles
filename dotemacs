@@ -14,7 +14,7 @@
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives
-            '("melpa" . "https://melpa.org/packages/") t)
+             '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives
              '("tromey" . "http://tromey.com/elpa/") t)
 
@@ -54,7 +54,7 @@
 
 ;; https://github.com/purcell/exec-path-from-shell
 (if (eq system-type 'darwin)
-   (add-to-list 'my-packages 'exec-path-from-shell))
+    (add-to-list 'my-packages 'exec-path-from-shell))
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
@@ -90,7 +90,7 @@
 
 ;; UI
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
-              (when (fboundp mode) (funcall mode -1)))
+  (when (fboundp mode) (funcall mode -1)))
 
 (setq-default inhibit-startup-screen t)
 (setq-default column-number-mode t)
@@ -115,7 +115,7 @@
         (indent-region (region-beginning)
                        (region-end))
       (if (looking-at "\\_>")
-         (hippie-expand nil)
+          (hippie-expand nil)
         (indent-for-tab-command)))))
 
 
@@ -125,11 +125,11 @@
 
 ;; OS clipboard
 (setq
-      x-select-enable-clipboard t
-      x-select-enable-primary t
-      save-interprogram-paste-before-kill t
-      apropos-do-all t
-      mouse-yank-at-point t)
+ x-select-enable-clipboard t
+ x-select-enable-primary t
+ save-interprogram-paste-before-kill t
+ apropos-do-all t
+ mouse-yank-at-point t)
 
 (blink-cursor-mode 0)
 (display-time-mode t)
@@ -223,3 +223,12 @@
           (when (eq 'dired-mode (buffer-local-value 'major-mode buffer))
             (kill-buffer buffer)))
         (buffer-list)))
+
+(defun indent-buffer-or-region ()
+  (interactive)
+  (save-excursion
+    (if (region-active-p)
+        (indent-region (region-beginning) (region-end))
+      (indent-region (point-min) (point-max)))))
+
+(global-set-key (kbd "C-M-'") 'indent-buffer-or-region)
