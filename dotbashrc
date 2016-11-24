@@ -26,6 +26,7 @@ else
   export ANDROID_HOME=/usr/local/opt/android-sdk
   export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
   export PATH=~/bin:/usr/local/bin:$PATH
+  export GOPATH=~/go
 fi
 
 
@@ -95,3 +96,5 @@ fi
 alias showpath='echo $PATH|sed "s/\:/\\n/g"'
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
+alias rm_dangling_docker_images='docker rmi -f $(docker images -qf dangling=true)'
+alias rm_dangling_docker_volumes='docker volume rm $(docker volume ls -qf dangling=true)'
