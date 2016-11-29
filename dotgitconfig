@@ -1,6 +1,7 @@
 [user]
 	name = Teemu Patja
 	email = tp@iki.fi
+	signingkey = 6580FD4C
 
 [core]
 	autocrlf = input
@@ -28,7 +29,7 @@
 	pru = !git pull --rebase && git submodule update
 	spru = !git stash && git pru && git stash pop
 	spush = !git stash && git pru && git push && git stash pop
-	l  = !git log|less 
+	l  = !git log|less
 	shw = "!f() { git show $1|less; }; f"
         co = checkout
         st = status
@@ -37,9 +38,14 @@
 	username = tpatja
 
 [filter "lfs"]
-	required = true
-	clean = git-lfs clean %f
 	smudge = git-lfs-cache smudge %f
+	required = false
+	clean = git-lfs clean -- %f
 
 [broadsoft]
 	gitcache = auto
+
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg2
