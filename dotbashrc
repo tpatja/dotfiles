@@ -25,7 +25,7 @@ else
   export GRADLE_HOME=/usr/local/opt/gradle
   export ANDROID_HOME=/usr/local/opt/android-sdk
   export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
-  export PATH=~/bin:/usr/local/bin:$PATH
+  export PATH=~/bin:~/miniconda3/bin:/usr/local/bin:$PATH
   export GOPATH=~/go
 fi
 
@@ -66,6 +66,7 @@ run_on_prompt_command()
 
 listening_on_port()
 {
+    # OSX specific
     lsof -i -n -P | grep TCP | grep LISTEN | grep ":$1"
 }
 
@@ -97,6 +98,8 @@ if [[ $(uname) == "Darwin" ]]; then
 else
   alias ls='ls --color=tty'
 fi
+
+eval "$(register-python-argcomplete conda)"
 
 alias showpath='echo $PATH|sed "s/\:/\\n/g"'
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
