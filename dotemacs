@@ -1,5 +1,6 @@
 ;; -*- mode: emacs-lisp -*-
 (global-set-key (kbd "TAB") 'smart-tab)
+
 (global-set-key "\C-ck" 'comment-region)
 
 (global-set-key (kbd "C-c C-+") 'text-scale-increase)
@@ -7,6 +8,23 @@
 
 (global-set-key (kbd "<f8>")
                 (lambda () (interactive)(call-process "date" nil t nil "+\%d.\%m.\%Y \%H:\%M" )))
+
+;function to implement a smarter TAB (EmacsWiki)
+(defun smart-tab ()
+  "This smart tab is minibuffer compliant: it acts as usual in
+    the minibuffer. Else, if mark is active, indents region. Else if
+    point is at the end of a symbol, expands it. Else indents the
+    current line."
+  (interactive)
+  (if (minibufferp)
+      (unless (minibuffer-complete)
+        (company-complete-common))
+    (if mark-active
+        (indent-region (region-beginning)
+                       (region-end))
+      (if (looking-at "\\_>")
+          (company-complete-common)
+        (indent-for-tab-command)))))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -26,6 +44,7 @@
 
 (defvar my-packages
   '(paredit
+    company
     clojure-mode
     clojure-mode-extra-font-locking
     cider
@@ -49,7 +68,8 @@
     yasnippet
     yesql-ghosts
     dockerfile-mode
-    web-mode))
+    web-mode
+    form-feed))
 
 ;; https://github.com/purcell/exec-path-from-shell
 (if (eq system-type 'darwin)
@@ -76,7 +96,11 @@
 (load "~/.emacs.d/qml-mode.el")
 (add-to-list 'auto-mode-alist '("\\.qml$" . qml-mode))
 
+(global-company-mode)
+(global-git-commit-mode)
 (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+(add-hook 'emacs-lisp-mode-hook       #'form-feed-mode)
+(add-hook 'help-mode-hook #'form-feed-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 
@@ -88,8 +112,13 @@
 
 
 ;; UI
-(dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
+(dolist (mode '(tool-bar-mode scroll-bar-mode))
   (when (fboundp mode) (funcall mode -1)))
+
+
+
+(setq user-full-name "Teemu Patja"
+      user-mail-address "tp@iki.fi")
 
 (setq-default inhibit-startup-screen t)
 (setq-default column-number-mode t)
@@ -99,23 +128,6 @@
 (global-set-key (kbd "S-<down>") 'windmove-down)
 (global-set-key (kbd "S-<left>") 'windmove-left)
 (global-set-key (kbd "S-<right>") 'windmove-right)
-
-;;function to implement a smarter TAB (EmacsWiki)
-(defun smart-tab ()
-  "This smart tab is minibuffer compliant: it acts as usual in
-    the minibuffer. Else, if mark is active, indents region. Else if
-    point is at the end of a symbol, expands it. Else indents the
-    current line."
-  (interactive)
-  (if (minibufferp)
-      (unless (minibuffer-complete)
-        (hippie-expand nil))
-    (if mark-active
-        (indent-region (region-beginning)
-                       (region-end))
-      (if (looking-at "\\_>")
-          (hippie-expand nil)
-        (indent-for-tab-command)))))
 
 
 (require 'bash-completion)
@@ -213,7 +225,6 @@
 (global-set-key (kbd "C-^") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-'") 'mc/unmark-next-like-this)
 
-
 (load-theme 'zenburn t)
 
 (defun kill-dired-buffers ()
@@ -231,9 +242,4 @@
       (indent-region (point-min) (point-max)))))
 
 (global-set-key (kbd "C-M-'") 'indent-buffer-or-region)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(epg-gpg-program "gpg2"))
+(setq epg-gpg-program "gpg2")
