@@ -15,7 +15,7 @@
 ;; syntax hilighting for midje
 (add-hook 'clojure-mode-hook
           (lambda ()
-            (setq inferior-lisp-program "lein repl")
+           ;; (setq inferior-lisp-program "lein repl")
             (font-lock-add-keywords
              nil
              '(("(\\(facts?\\)"
@@ -34,9 +34,6 @@
 ;; Cider
 ;;;;
 
-;; provides minibuffer documentation for the code you're typing into the repl
-(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
-
 ;; go right to the REPL buffer when it's finished connecting
 (setq cider-repl-pop-to-buffer-on-connect t)
 
@@ -49,6 +46,9 @@
 
 ;; Wrap when navigating history.
 (setq cider-repl-wrap-history t)
+
+(setq cider-lein-command "/usr/local/bin/lein")
+(setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
 
 ;; enable paredit in your REPL
 (add-hook 'cider-repl-mode-hook 'paredit-mode)
@@ -87,3 +87,4 @@
 
 ;; clj-refactor
 (cljr-add-keybindings-with-prefix "C-c C-m")
+(setq cljr-warn-on-eval nil)
