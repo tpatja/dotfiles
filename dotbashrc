@@ -64,6 +64,11 @@ run_on_prompt_command()
     set_window_title $(echo $PWD | sed s:^$HOME:~:)
 }
 
+listening_on_port()
+{
+    lsof -i -n -P | grep TCP | grep LISTEN | grep ":$1"
+}
+
 export HISTTIMEFORMAT="%d.%m.%Y %T  "
 PROMPT_COMMAND="run_on_prompt_command;$PROMPT_COMMAND"
 PROMPT_DIRTRIM=3
