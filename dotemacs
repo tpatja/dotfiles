@@ -243,3 +243,4 @@
 
 (global-set-key (kbd "C-M-'") 'indent-buffer-or-region)
 (setq epg-gpg-program "gpg2")
+(setq visible-bell 1)
