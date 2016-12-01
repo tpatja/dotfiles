@@ -5,6 +5,7 @@
 
 [core]
 	autocrlf = input
+	excludesfile = /Users/tpatja/.gitignore
 
 [diff]
 	tool = p4merge
