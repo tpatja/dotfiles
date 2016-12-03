@@ -25,7 +25,7 @@ else
   export GRADLE_HOME=/usr/local/opt/gradle
   export ANDROID_HOME=/usr/local/opt/android-sdk
   export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
-  export PATH=~/bin:~/miniconda3/bin:/usr/local/bin:$PATH
+  export PATH=~/bin:/usr/local/bin:$PATH:~/miniconda3/bin
   export GOPATH=~/go
 fi
 
