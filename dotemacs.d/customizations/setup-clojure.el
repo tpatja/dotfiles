@@ -68,6 +68,6 @@
 (cljr-add-keybindings-with-prefix "C-c C-m")
 
 (eval-after-load 'clj-refactor-mode
-  (define-key clj-refactor-map (kbd "C-c '") 'hydra-cljr-cljr-menu/body))
+  (define-key clj-refactor-map (kbd "C-c '") 'hydra-cljr-help-menu/body))
 
 (setq cljr-warn-on-eval nil)
