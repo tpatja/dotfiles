@@ -1,5 +1,6 @@
 ;; -*- mode: emacs-lisp -*-
-(global-set-key (kbd "TAB") 'smart-tab)
+(global-set-key (kbd "TAB")
+                #'company-indent-or-complete-common)
 
 (global-set-key "\C-ck" 'comment-region)
 
@@ -8,23 +9,6 @@
 
 (global-set-key (kbd "<f8>")
                 (lambda () (interactive)(call-process "date" nil t nil "+\%d.\%m.\%Y \%H:\%M" )))
-
-;function to implement a smarter TAB (EmacsWiki)
-(defun smart-tab ()
-  "This smart tab is minibuffer compliant: it acts as usual in
-    the minibuffer. Else, if mark is active, indents region. Else if
-    point is at the end of a symbol, expands it. Else indents the
-    current line."
-  (interactive)
-  (if (minibufferp)
-      (unless (minibuffer-complete)
-        (company-complete-common))
-    (if mark-active
-        (indent-region (region-beginning)
-                       (region-end))
-      (if (looking-at "\\_>")
-          (company-complete-common)
-        (indent-for-tab-command)))))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -69,7 +53,9 @@
     yesql-ghosts
     dockerfile-mode
     web-mode
-    form-feed))
+    form-feed
+    company-flx
+    company-restclient))
 
 ;; https://github.com/purcell/exec-path-from-shell
 (if (eq system-type 'darwin)
@@ -97,6 +83,13 @@
 (add-to-list 'auto-mode-alist '("\\.qml$" . qml-mode))
 
 (global-company-mode)
+(add-hook 'restclient-mode-hook
+          (lambda ()
+            (set (make-local-variable 'company-backends)
+                 '(company-restclient))))
+(with-eval-after-load 'company
+  (company-flx-mode +1))
+
 (global-git-commit-mode)
 (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
 (add-hook 'emacs-lisp-mode-hook       #'form-feed-mode)
@@ -114,7 +107,6 @@
 ;; UI
 (dolist (mode '(tool-bar-mode scroll-bar-mode))
   (when (fboundp mode) (funcall mode -1)))
-
 
 
 (setq user-full-name "Teemu Patja"
