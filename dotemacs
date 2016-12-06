@@ -214,9 +214,10 @@
 (global-set-key (kbd "C-0") 'er/expand-region)
 
 (require 'multiple-cursors)
-(global-set-key (kbd "C-^") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-'") 'mc/unmark-next-like-this)
-
+(global-set-key (kbd "C-<") 'mc/mark-next-like-this)
+(global-set-key (kbd "C->") 'mc/unmark-next-like-this)
+(global-set-key (kbd "C-M-<") 'mc/mark-all-like-this)
+(multiple-cursors-mode t)
 (load-theme 'zenburn t)
 
 (defun kill-dired-buffers ()
