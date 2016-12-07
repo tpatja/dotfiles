@@ -32,6 +32,12 @@
 (add-hook 'clojure-mode-hook
           (lambda () (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
 
+;; Use clojure mode for other extensions
+(dolist (pattern '("\\.edn$"
+                   "\\.boot$"
+                   "lein-env"))
+  (add-to-list 'auto-mode-alist (cons pattern 'clojure-mode)))
+
 
 ;;;;
 ;; Cider
@@ -44,10 +50,9 @@
 (setq cider-show-error-buffer t)
 (setq cider-auto-select-error-buffer t)
 
-;; Where to store the cider history.
-(setq cider-repl-history-file "~/.emacs.d/cider-history")
 
-;; Wrap when navigating history.
+(setq cider-repl-history-file "~/.emacs.d/cider-history")
+(setq cider-repl-history-size 2000)
 (setq cider-repl-wrap-history t)
 
 (setq cider-lein-command "/usr/local/bin/lein")
@@ -56,13 +61,6 @@
 ;; enable paredit in your REPL
 (add-hook 'cider-repl-mode-hook 'paredit-mode)
 
-
-
-;; Use clojure mode for other extensions
-(dolist (pattern '("\\.edn$"
-                   "\\.boot$"
-                   "lein-env"))
-  (add-to-list 'auto-mode-alist (cons pattern 'clojure-mode)))
 
 ;; clj-refactor
 (cljr-add-keybindings-with-prefix "C-c C-m")
