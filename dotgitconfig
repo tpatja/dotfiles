@@ -32,8 +32,11 @@
 	spush = !git stash && git pru && git push && git stash pop
 	l  = !git log|less
 	shw = "!f() { git show $1|less; }; f"
-        co = checkout
-        st = status
+  co = checkout
+  st = status
+  ignore-changes = update-index --assume-unchanged
+  unignore-changes = update-index --no-assume-unchanged
+  ignored = !git ls-files -v | grep "^[[:lower:]]"
 
 [gitreview]
 	username = tpatja
