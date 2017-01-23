@@ -1,61 +1,61 @@
 # -*- mode: sh -*-
 for f in /etc/bash_completion /usr/local/etc/bash_completion; do
-  [[ -f $f ]] && . $f
+    [[ -f $f ]] && . $f
 done
 
 export PS1='\[\e[32m\]\u@\h:\[\e[33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$ '
 export LESS="--quit-on-intr --raw-control-chars --LONG-PROMPT"
 
 if [ "$(uname | grep -i cygwin)" != "" ] ; then
-  CYGWIN=1
+    CYGWIN=1
 fi
 
 if [ "$CYGWIN" == "1" ]; then
-  export ANT_HOME=/cygdrive/c/tools/apache-ant-1.9.0
-  export PATH=$ANT_HOME/bin:$PATH/cygdrive/c/tools/apache
-  complete -C complete-ant-cmd.pl ant build.sh
-  export JAVA_HOME=/cygdrive/c/Program\ Files/Java/jdk1.7.0_17
-  export PATH=$JAVA_HOME/bin:$PATH
-  export PATH=/cygdrive/c/tools/apache-maven-3.0.5/bin:$PATH
-  export EDITOR=st.sh
+    export ANT_HOME=/cygdrive/c/tools/apache-ant-1.9.0
+    export PATH=$ANT_HOME/bin:$PATH/cygdrive/c/tools/apache
+    complete -C complete-ant-cmd.pl ant build.sh
+    export JAVA_HOME=/cygdrive/c/Program\ Files/Java/jdk1.7.0_17
+    export PATH=$JAVA_HOME/bin:$PATH
+    export PATH=/cygdrive/c/tools/apache-maven-3.0.5/bin:$PATH
+    export EDITOR=st.sh
 else
-  export EDITOR=emacsclient
-  export ANT_HOME=/usr/local/opt/ant
-  export MAVEN_HOME=/usr/local/opt/maven
-  export GRADLE_HOME=/usr/local/opt/gradle
-  export ANDROID_HOME=/usr/local/opt/android-sdk
-  export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
-  export PATH=~/bin:/usr/local/bin:$PATH:~/miniconda3/bin
-  export GOPATH=~/go
+    export EDITOR=emacsclient
+    export ANT_HOME=/usr/local/opt/ant
+    export MAVEN_HOME=/usr/local/opt/maven
+    export GRADLE_HOME=/usr/local/opt/gradle
+    export ANDROID_HOME=/usr/local/opt/android-sdk
+    export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
+    export PATH=~/bin:/usr/local/bin:$PATH:~/miniconda3/bin
+    export GOPATH=~/go
 fi
 
 
 log_bash_persistent_history()
 {
-  [[
-    $(history 1) =~ ^\ *[0-9]+\ +([0-9.]+\ [0-9:]+)\ +(.*)$
-  ]]
-  local date_part="${BASH_REMATCH[1]}"
-  local command_part="${BASH_REMATCH[2]}"
-  if [ "$command_part" != "$PERSISTENT_HISTORY_LAST" ]
-  then
-    echo $date_part "|" "$command_part" >> ~/.persistent_history
-    export PERSISTENT_HISTORY_LAST="$command_part"
-  fi
+    [[
+        $(history 1) =~ ^\ *[0-9]+\ +([0-9.]+\ [0-9:]+)\ +(.*)$
+    ]]
+    local date_part="${BASH_REMATCH[1]}"
+    local command_part="${BASH_REMATCH[2]}"
+    if [ "$command_part" != "$PERSISTENT_HISTORY_LAST" ]
+    then
+        echo $date_part "|" "$command_part" >> ~/.persistent_history
+        export PERSISTENT_HISTORY_LAST="$command_part"
+    fi
 }
 
 set_window_title()
 {
-  case $TERM in
-    *xterm*)
-      echo -ne "\033]1;\007"
-      echo -ne "\033]2;\007"
-      echo -ne "\033]0;$*\007"
-      ;;
-    *)
-      return
-      ;;
-  esac
+    case $TERM in
+        *xterm*)
+            echo -ne "\033]1;\007"
+            echo -ne "\033]2;\007"
+            echo -ne "\033]0;$*\007"
+            ;;
+        *)
+            return
+            ;;
+    esac
 }
 
 run_on_prompt_command()
@@ -79,35 +79,36 @@ shopt -s nocaseglob
 
 alias ll='ls -l'
 if [[ $(uname) == "Darwin" ]]; then
-  alias ls='ls -G'
-  alias myip=$'ifconfig |grep \"inet \"|grep -v \"127.0.0.1\"|awk \'{print $2}\''
-  function anybar { echo -n $1 | nc -4u -w0 localhost ${2:-1738}; }
-  export JAVA_HOME=$(/usr/libexec/java_home)
+    alias ls='ls -G'
+    alias myip='ifconfig |grep "inet " | grep -v 127.0.0.1 | awk '"'"'{print $2}'"'"
 
+    function anybar { echo -n $1 | nc -4u -w0 localhost ${2:-1738}; }
+    export JAVA_HOME=$(/usr/libexec/java_home)
 
-  [ -f ~/.gpg-agent-info ] && source ~/.gpg-agent-info
-  if [ -S "${GPG_AGENT_INFO%%:*}" ]; then
-    export GPG_AGENT_INFO
-  else
-    if [[ -z $(ps x|grep gpg-agent|grep daemon) ]] \
-       && [[ -x $(which gpg-agent) ]]; then
-      eval $( gpg-agent --daemon --write-env-file ~/.gpg-agent-info )
+    [ -f ~/.gpg-agent-info ] && source ~/.gpg-agent-info
+    if [ -S "${GPG_AGENT_INFO%%:*}" ]; then
+        export GPG_AGENT_INFO
+    else
+        if [[ -z $(ps x|grep gpg-agent|grep daemon) ]] \
+               && [[ -x $(which gpg-agent) ]]; then
+            eval $( gpg-agent --daemon --write-env-file ~/.gpg-agent-info )
+        fi
     fi
-  fi
 
 else
-  alias ls='ls --color=tty'
+    alias ls='ls --color=tty'
 fi
 
 eval "$(register-python-argcomplete conda)"
 if [ -e /usr/local/bin/aws_bash_completer ] ; then
-   source /usr/local/bin/aws_bash_completer
+    source /usr/local/bin/aws_bash_completer
 fi
 
 alias showpath='echo $PATH|sed "s/\:/\\n/g"'
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
-alias rm_dangling_docker_images='docker rmi -f $(docker images -qf dangling=true)'
-alias rm_dangling_docker_volumes='docker volume rm $(docker volume ls -qf dangling=true)'
 alias docker-compose-stop="docker-compose stop; docker-compose rm -f"
 alias docker-dev-env='eval $(docker-machine env dev)'
+alias docker-stop-all="docker ps -a -q | xargs docker stop"
+alias docker-rm-dangling-images='docker rmi -f $(docker images -qf dangling=true)'
+alias docker-rm-dangling-volumes='docker volume rm $(docker volume ls -qf dangling=true)'
