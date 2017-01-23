@@ -19,7 +19,7 @@
             (define-key coffee-mode-map "\C-j" 'coffee-newline-and-indent)
             (setq coffee-cleanup-whitespace nil)))
 (custom-set-variables
- '(coffee-tab-width 2))
+ '(coffee-tab-width 4))
 
 ;; http://emacs.stackexchange.com/a/20055
 (add-hook 'web-mode-hook

@@ -55,7 +55,8 @@
     web-mode
     form-feed
     company-flx
-    company-restclient))
+    company-restclient
+    nginx-mode))
 
 ;; https://github.com/purcell/exec-path-from-shell
 (if (eq system-type 'darwin)
@@ -98,7 +99,7 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 
 (setq-default indent-tabs-mode nil)
-(setq-default tab-width 2)
+(setq-default tab-width 4)
 
 (require 'yasnippet)
 (yas-global-mode 1)
@@ -175,10 +176,10 @@
 (global-set-key (kbd "C-;") 'toggle-comment-on-line)
 
 
-;; 2 space tab
+;; 4 space tab
 (defun die-tabs ()
   (interactive)
-  (set-variable 'tab-width 2)
+  (set-variable 'tab-width 4)
   (mark-whole-buffer)
   (untabify (region-beginning) (region-end))
   (keyboard-quit))

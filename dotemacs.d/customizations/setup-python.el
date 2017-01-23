@@ -6,5 +6,5 @@
 (add-hook 'python-mode-hook
           (lambda ()
             (setq indent-tabs-mode nil)
-            (setq tab-width 2)
+            (setq tab-width 4)
             (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
