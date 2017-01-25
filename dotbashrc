@@ -112,3 +112,5 @@ alias docker-dev-env='eval $(docker-machine env dev)'
 alias docker-stop-all="docker ps -a -q | xargs docker stop"
 alias docker-rm-dangling-images='docker rmi -f $(docker images -qf dangling=true)'
 alias docker-rm-dangling-volumes='docker volume rm $(docker volume ls -qf dangling=true)'
+alias git-github-ledger="trezor-agent -v git@github.com -- git"
+alias git-bsft-ledger="trezor-agent -v git@git.broadsoft.com -- git"
