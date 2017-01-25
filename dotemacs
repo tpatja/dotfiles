@@ -56,7 +56,9 @@
     form-feed
     company-flx
     company-restclient
-    nginx-mode))
+    nginx-mode
+    hcl-mode
+    terraform-mode))
 
 ;; https://github.com/purcell/exec-path-from-shell
 (if (eq system-type 'darwin)
