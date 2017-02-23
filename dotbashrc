@@ -114,3 +114,4 @@ alias docker-rm-dangling-images='docker rmi -f $(docker images -qf dangling=true
 alias docker-rm-dangling-volumes='docker volume rm $(docker volume ls -qf dangling=true)'
 alias git-github-ledger="trezor-agent -v git@github.com -- git"
 alias git-bsft-ledger="trezor-agent -v git@git.broadsoft.com -- git"
+alias calc='bc -l <<< '
