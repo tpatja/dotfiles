@@ -26,7 +26,7 @@ else
     export ANDROID_HOME=/usr/local/opt/android-sdk
     export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
     export GOPATH=~/go
-    export PATH=~/bin:/usr/local/bin:$PATH:$GOPATH/bin:~/miniconda3/bin
+    export PATH=~/bin:/usr/local/bin:$PATH:$GOPATH/bin:~/miniconda2/bin
 fi
 
 
@@ -115,3 +115,9 @@ alias docker-rm-dangling-volumes='docker volume rm $(docker volume ls -qf dangli
 alias git-github-ledger="trezor-agent -v git@github.com -- git"
 alias git-bsft-ledger="trezor-agent -v git@git.broadsoft.com -- git"
 alias calc='bc -l <<< '
+
+PATH="~/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="~/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="~/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"~/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=~/perl5"; export PERL_MM_OPT;
