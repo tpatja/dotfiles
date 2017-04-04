@@ -115,6 +115,7 @@ alias docker-rm-dangling-volumes='docker volume rm $(docker volume ls -qf dangli
 alias git-github-ledger="trezor-agent -v git@github.com -- git"
 alias git-bsft-ledger="trezor-agent -v git@git.broadsoft.com -- git"
 alias calc='bc -l <<< '
+alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
 
 PATH="~/perl5/bin${PATH:+:${PATH}}"; export PATH;
 PERL5LIB="~/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
