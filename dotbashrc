@@ -26,7 +26,7 @@ else
     export ANDROID_HOME=/usr/local/opt/android-sdk
     export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
     export GOPATH=~/go
-    export PATH=~/bin:/usr/local/bin:$PATH:$GOPATH/bin:~/miniconda2/bin
+    export PATH=~/bin:~/.pyenv/bin:/usr/local/sbin:/usr/local/bin:$PATH:$GOPATH/bin
 fi
 
 
@@ -99,7 +99,11 @@ else
     alias ls='ls --color=tty'
 fi
 
-eval "$(register-python-argcomplete conda)"
+# eval "$(register-python-argcomplete conda)"
+
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 if [ -e /usr/local/bin/aws_bash_completer ] ; then
     source /usr/local/bin/aws_bash_completer
 fi
