@@ -70,6 +70,21 @@ listening_on_port()
     lsof -i -n -P | grep TCP | grep LISTEN | grep ":$1"
 }
 
+aws_use_credentials()
+{
+    if [[ -f ~/.aws/credentials.$1 ]] ; then
+        rm -f ~/.aws/credentials
+        ln -s ~/.aws/credentials.$1 ~/.aws/credentials
+    else
+        echo "No credentials found for $1 (at ~/.aws/credentials.$1)"
+    fi
+}
+
+aws_credentials_in_use()
+{
+    readlink ~/.aws/credentials|awk -F'.' '{print $NF;}'
+}
+
 export HISTTIMEFORMAT="%d.%m.%Y %T  "
 PROMPT_COMMAND="run_on_prompt_command;$PROMPT_COMMAND"
 PROMPT_DIRTRIM=3
