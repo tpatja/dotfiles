@@ -26,7 +26,7 @@ else
     export ANDROID_HOME=/usr/local/opt/android-sdk
     export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
     export GOPATH=~/go
-    export PATH=~/bin:~/.pyenv/bin:/usr/local/sbin:/usr/local/bin:$PATH:$GOPATH/bin
+    export PATH=~/bin:~/.local/bin:~/.pyenv/bin:/usr/local/sbin:/usr/local/bin:$PATH:$GOPATH/bin
 fi
 
 
@@ -70,7 +70,7 @@ listening_on_port()
     lsof -i -n -P | grep TCP | grep LISTEN | grep ":$1"
 }
 
-aws_use_credentials()
+aws_use_account()
 {
     if [[ -f ~/.aws/credentials.$1 ]] ; then
         rm -f ~/.aws/credentials
@@ -78,11 +78,18 @@ aws_use_credentials()
     else
         echo "No credentials found for $1 (at ~/.aws/credentials.$1)"
     fi
+    if [[ -f ~/.aws/config.$1 ]] ; then
+        rm -f ~/.aws/config
+        ln -s ~/.aws/config.$1 ~/.aws/config
+    else
+        echo "No config found for $1 (at ~/.aws/config.$1)"
+    fi
 }
 
-aws_credentials_in_use()
+aws_account_in_use()
 {
-    readlink ~/.aws/credentials|awk -F'.' '{print $NF;}'
+    echo "config="$(readlink ~/.aws/config|awk -F'.' '{print $NF;}')
+    echo "credentials="$(readlink ~/.aws/credentials|awk -F'.' '{print $NF;}')
 }
 
 export HISTTIMEFORMAT="%d.%m.%Y %T  "

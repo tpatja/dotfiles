@@ -1,13 +1,11 @@
 ;; -*- mode: emacs-lisp -*-
 (global-set-key (kbd "TAB")
                 #'company-indent-or-complete-common)
-
 (global-set-key "\C-ck" 'comment-region)
-
 (global-set-key (kbd "C-c C-+") 'text-scale-increase)
 (global-set-key (kbd "C-c C--") 'text-scale-decrease)
-
-(global-set-key (kbd "<f8>")
+(global-set-key (kbd "C-c %") 'replace-string)
+(global-set-key (kbd "C-c <f8>")
                 (lambda () (interactive)(call-process "date" nil t nil "+\%d.\%m.\%Y \%H:\%M" )))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -59,7 +57,14 @@
     company-flx
     company-restclient
     nginx-mode
-    terraform-mode))
+    terraform-mode
+    neotree
+    which-key
+    blacken
+    vue-html-mode
+    vue-mode
+    all-the-icons
+    elpy-mode))
 
 (add-to-list 'package-pinned-packages '(cider . "melpa-stable") t)
 
@@ -250,5 +255,17 @@
 
 
 (global-set-key (kbd "C-M-'") 'indent-buffer-or-region)
+
 (setq epg-gpg-program "gpg")
+
 (setq visible-bell 1)
+
+(which-func-mode t)
+
+(require 'all-the-icons)
+
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+
+(require 'hideshow)
