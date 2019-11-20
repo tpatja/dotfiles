@@ -23,7 +23,7 @@
  '(("(python)Index" pydoc-info-lookup-transform-entry)
    ("(sphinx)Index" pydoc-info-lookup-transform-entry)))
 
-(require 'elpy-mode)
+(require 'elpy)
 
 (eval-after-load "elpy-mode"
   '(progn

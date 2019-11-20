@@ -64,7 +64,7 @@
     vue-html-mode
     vue-mode
     all-the-icons
-    elpy-mode))
+    elpy))
 
 (add-to-list 'package-pinned-packages '(cider . "melpa-stable") t)
 
@@ -253,6 +253,15 @@
   (interactive)
   (set-face-attribute 'default (selected-frame) :height 120))
 
+(defun toggle-osx-fullscreen ()
+  "Toggle full screen"
+  (interactive)
+  (set-frame-parameter
+     nil 'fullscreen
+     (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
+
+(when (string-equal system-type "darwin")
+  (global-set-key (kbd "<shift+f11>") 'toggle-osx-fullscreen))
 
 (global-set-key (kbd "C-M-'") 'indent-buffer-or-region)
 
