@@ -144,7 +144,7 @@ alias git-bsft-ledger="trezor-agent -v git@git.broadsoft.com -- git"
 alias calc='bc -l <<< '
 alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
 alias e="emacsclient -n"
-alias genpw="pwgen -syr '\`' 10 1"
+alias genpw="pwgen -syr '\`' 16 1"
 
 if [ $OSTYPE == "linux-gnu" ] ; then
     alias pbcopy='xclip -selection clipboard'
