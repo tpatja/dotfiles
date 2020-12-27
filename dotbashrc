@@ -27,7 +27,7 @@ else
     export ANDROID_HOME=/usr/local/opt/android-sdk
     export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
     export GOPATH=~/go
-    export PATH=~/bin:~/.local/bin:~/.pyenv/bin:/usr/local/sbin:/usr/local/bin:$PATH:$GOPATH/bin
+    export PATH=~/bin:~/.local/bin:~/.pyenv/bin:/usr/local/sbin:/usr/local/bin:$PATH:$GOPATH/bin:~/.ebcli-virtual-env/executables
 fi
 
 
@@ -59,10 +59,30 @@ set_window_title()
     esac
 }
 
-run_on_prompt_command()
+add_venv_info () {
+    if [ -z "$VIRTUAL_ENV_DISABLE_PROMPT" ] ; then
+        if [ "$VIRTUAL_ENV" != "" ]; then
+            PS1="(`basename \"$VIRTUAL_ENV\"`) $PS1"
+        fi
+    fi
+}
+
+__prompt_command()
 {
+    local EXIT="$?"
+    local RED='\[\e[0;31m\]'
+    local GREEN='\[\e[0;32m\]'
+    local YELLOW='\[\e[33m\]'
+    local NC='\[\e[0m\]'
+    local PS1_DEFAULT="${GREEN}\u@\h:${YELLOW}\w${NC}"'$(__git_ps1 " (%s)")\n\$ '
     log_bash_persistent_history
     set_window_title $(echo $PWD | sed s:^$HOME:~:)
+    if [ $EXIT != 0 ] ; then
+        PS1="${RED}exit=${EXIT}${NC} ${PS1_DEFAULT}"
+    else
+        PS1=$PS1_DEFAULT
+    fi
+    add_venv_info
 }
 
 listening_on_port()
@@ -94,7 +114,7 @@ aws_account_in_use()
 }
 
 export HISTTIMEFORMAT="%d.%m.%Y %T  "
-PROMPT_COMMAND="run_on_prompt_command;$PROMPT_COMMAND"
+PROMPT_COMMAND="__prompt_command"
 PROMPT_DIRTRIM=3
 alias phgrep='cat ~/.persistent_history|grep --color'
 
@@ -159,6 +179,10 @@ PERL_MM_OPT="INSTALL_BASE=~/perl5"; export PERL_MM_OPT;
 
 if [[ $(uname) == "Darwin" ]]; then
     export NVM_DIR="$HOME/.nvm"
-    [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
+    [ -s "/usr/local/opt/nvm/nvm*.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
     [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
 fi
+
+# added for npm-completion https://github.com/Jephuff/npm-bash-completion
+PATH_TO_NPM_COMPLETION="/Users/tpatja/.nvm/versions/node/v13.3.0/lib/node_modules/npm-completion"
+source $PATH_TO_NPM_COMPLETION/npm-completion.sh
