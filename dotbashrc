@@ -27,7 +27,8 @@ else
     export ANDROID_HOME=/usr/local/opt/android-sdk
     export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
     export GOPATH=~/go
-    export PATH=~/bin:~/.local/bin:~/.pyenv/bin:/usr/local/sbin:/usr/local/bin:$PATH:$GOPATH/bin:~/.ebcli-virtual-env/executables
+    export FLYCTL_INSTALL="/home/tpatja/.fly"
+    export PATH=~/bin:~/.local/bin:~/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/local/go/bin:$GOPATH/bin:$FLYCTL_INSTALL/bin:$PATH:$PATH
 fi
 
 
@@ -144,6 +145,7 @@ fi
 
 # eval "$(register-python-argcomplete conda)"
 
+eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
@@ -177,12 +179,16 @@ PERL_LOCAL_LIB_ROOT="~/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; ex
 PERL_MB_OPT="--install_base \"~/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=~/perl5"; export PERL_MM_OPT;
 
+
 if [[ $(uname) == "Darwin" ]]; then
     export NVM_DIR="$HOME/.nvm"
     [ -s "/usr/local/opt/nvm/nvm*.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
     [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
+else
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 fi
 
-# added for npm-completion https://github.com/Jephuff/npm-bash-completion
-PATH_TO_NPM_COMPLETION="/Users/tpatja/.nvm/versions/node/v13.3.0/lib/node_modules/npm-completion"
-source $PATH_TO_NPM_COMPLETION/npm-completion.sh
+nvm deactivate
+nvm use default
