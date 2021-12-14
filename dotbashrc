@@ -5,31 +5,20 @@ done
 
 export PS1='\[\e[32m\]\u@\h:\[\e[33m\]\w\[\e[0m\]$(__git_ps1 " (%s)")\n\$ '
 export LESS="--quit-on-intr --raw-control-chars --LONG-PROMPT"
+export EDITOR="emacsclient -n"
+export GIT_EDITOR="emacsclient"
 
-if [ "$(uname | grep -i cygwin)" != "" ] ; then
-    CYGWIN=1
-fi
-
-if [ "$CYGWIN" == "1" ]; then
-    export ANT_HOME=/cygdrive/c/tools/apache-ant-1.9.0
-    export PATH=$ANT_HOME/bin:$PATH/cygdrive/c/tools/apache
-    complete -C complete-ant-cmd.pl ant build.sh
-    export JAVA_HOME=/cygdrive/c/Program\ Files/Java/jdk1.7.0_17
-    export PATH=$JAVA_HOME/bin:$PATH
-    export PATH=/cygdrive/c/tools/apache-maven-3.0.5/bin:$PATH
-    export EDITOR=st.sh
-else
-    export EDITOR="emacsclient -n"
-    export GIT_EDITOR="emacsclient"
+if [[ $(uname) == "Darwin" ]]; then
     export ANT_HOME=/usr/local/opt/ant
     export MAVEN_HOME=/usr/local/opt/maven
     export GRADLE_HOME=/usr/local/opt/gradle
     export ANDROID_HOME=/usr/local/opt/android-sdk
     export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
-    export GOPATH=~/go
-    export FLYCTL_INSTALL="/home/tpatja/.fly"
-    export PATH=~/bin:~/.local/bin:~/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/local/go/bin:$GOPATH/bin:$FLYCTL_INSTALL/bin:$PATH:$PATH
 fi
+
+export GOPATH=~/go
+export FLYCTL_INSTALL=~/.fly
+export PATH=~/bin:~/.local/bin:~/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/local/go/bin:$GOPATH/bin:$FLYCTL_INSTALL/bin:$PATH:$PATH
 
 
 log_bash_persistent_history()
@@ -189,6 +178,3 @@ else
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 fi
-
-nvm deactivate
-nvm use default
