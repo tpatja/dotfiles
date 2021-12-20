@@ -21,8 +21,7 @@ export FLYCTL_INSTALL=~/.fly
 export PATH=~/bin:~/.local/bin:~/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/local/go/bin:$GOPATH/bin:$FLYCTL_INSTALL/bin:$PATH:$PATH
 
 
-log_bash_persistent_history()
-{
+log_bash_persistent_history() {
     [[
         $(history 1) =~ ^\ *[0-9]+\ +([0-9.]+\ [0-9:]+)\ +(.*)$
     ]]
@@ -35,8 +34,7 @@ log_bash_persistent_history()
     fi
 }
 
-set_window_title()
-{
+set_window_title() {
     case $TERM in
         *xterm*)
             echo -ne "\033]1;\007"
@@ -57,8 +55,7 @@ add_venv_info () {
     fi
 }
 
-__prompt_command()
-{
+__prompt_command() {
     local EXIT="$?"
     local RED='\[\e[0;31m\]'
     local GREEN='\[\e[0;32m\]'
@@ -75,14 +72,12 @@ __prompt_command()
     add_venv_info
 }
 
-listening_on_port()
-{
+listening_on_port() {
     # OSX specific
     lsof -i -n -P | grep TCP | grep LISTEN | grep ":$1"
 }
 
-aws_use_account()
-{
+aws_use_account() {
     if [[ -f ~/.aws/credentials.$1 ]] ; then
         rm -f ~/.aws/credentials
         ln -s ~/.aws/credentials.$1 ~/.aws/credentials
@@ -97,10 +92,13 @@ aws_use_account()
     fi
 }
 
-aws_account_in_use()
-{
+aws_account_in_use() {
     echo "config="$(readlink ~/.aws/config|awk -F'.' '{print $NF;}')
     echo "credentials="$(readlink ~/.aws/credentials|awk -F'.' '{print $NF;}')
+}
+
+epoch-to-human-readable() {
+    date -d "@$1"
 }
 
 export HISTTIMEFORMAT="%d.%m.%Y %T  "
