@@ -1,3 +1,14 @@
 dotemacs.d/session*
 dotemacs.d/auto-save-list
 dotemacs.d/history
+dotemacs.d/transient
+dotemacs.d/.emacs.desktop
+dotemacs.d/.last-package-update-day
+dotemacs.d/network-security.data
+dotemacs.d/recentf
+*~
+**/#*#
+*.swp
+**/elpa
+**/elpy
+**/*.lock
