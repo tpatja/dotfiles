@@ -14,11 +14,14 @@ if [[ $(uname) == "Darwin" ]]; then
     export GRADLE_HOME=/usr/local/opt/gradle
     export ANDROID_HOME=/usr/local/opt/android-sdk
     export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
+elif [[ $(uname) == "Linux" ]]; then
+    export ANDROID_HOME=~/Android/Sdk
+    export PATH=$PATH:$ANDROID_HOME/platform-tools
 fi
 
 export GOPATH=~/go
 export FLYCTL_INSTALL=~/.fly
-export PATH=~/bin:~/.local/bin:~/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/local/go/bin:$GOPATH/bin:$FLYCTL_INSTALL/bin:$PATH:$PATH
+export PATH=$PATH:~/bin:~/.local/bin:~/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/local/go/bin:$GOPATH/bin:$FLYCTL_INSTALL/bin
 
 
 log_bash_persistent_history() {
