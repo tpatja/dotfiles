@@ -23,6 +23,9 @@ export GOPATH=~/go
 export FLYCTL_INSTALL=~/.fly
 export PATH=$PATH:~/bin:~/.local/bin:~/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/local/go/bin:$GOPATH/bin:$FLYCTL_INSTALL/bin
 
+if [ -f ~/.cargo/env ] ; then
+    . ~/.cargo/env
+fi
 
 log_bash_persistent_history() {
     [[
